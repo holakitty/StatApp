@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard | Student Learning Portal</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fafc,
+                    #eef2ff
+                );
+
+            color: #172033;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            height: 72px;
+            background: rgba(255,255,255,.96);
+            border-bottom: 1px solid #e5e7eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: 800;
+            color: #4f46e5;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .student-name {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .logout-btn {
+            border: 1px solid #e2e8f0;
+            background: white;
+            padding: 9px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            background: #f8fafc;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+            width: min(1180px, 92%);
+            margin: 40px auto 70px;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            font-size: clamp(30px, 4vw, 46px);
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        .welcome p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        /* =========================
+           ACCESS CARD
+        ========================= */
+
+        .access-card {
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #7c3aed
+                );
+
+            color: white;
+
+            border-radius: 24px;
+            padding: 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 25px;
+
+            box-shadow:
+                0 20px 45px rgba(79,70,229,.22);
+
+            margin-bottom: 30px;
+        }
+
+        .access-card h2 {
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .access-card p {
+            opacity: .9;
+        }
+
+        .access-badge {
+            background: rgba(255,255,255,.16);
+            border: 1px solid rgba(255,255,255,.25);
+
+            padding: 12px 20px;
+            border-radius: 999px;
+
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        /* =========================
+           GRID
+        ========================= */
+
+        .grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 20px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 10px 30px rgba(15,23,42,.06);
+
+            transition:
+                transform .2s,
+                box-shadow .2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 15px 35px rgba(15,23,42,.10);
+        }
+
+        .icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #eef2ff;
+
+            font-size: 23px;
+
+            margin-bottom: 18px;
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+            font-size: 19px;
+        }
+
+        .card p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .primary-btn {
+            display: inline-block;
+
+            border: none;
+
+            background: #4f46e5;
+            color: white;
+
+            padding: 12px 18px;
+
+            border-radius: 11px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            text-decoration: none;
+        }
+
+        .primary-btn:hover {
+            background: #4338ca;
+        }
+
+        .secondary-btn {
+            display: inline-block;
+
+            background: #f8fafc;
+            color: #334155;
+
+            border: 1px solid #e2e8f0;
+
+            padding: 12px 18px;
+
+            border-radius: 11px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            text-decoration: none;
+        }
+
+        /* =========================
+           PLAN INFO
+        ========================= */
+
+        .plan-section {
+            margin-top: 30px;
+        }
+
+        .plan-section h2 {
+            margin-bottom: 18px;
+        }
+
+        .info-box {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 18px;
+
+            padding: 22px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .info-item {
+            padding: 15px;
+
+            background: #f8fafc;
+
+            border-radius: 12px;
+        }
+
+        .info-label {
+            color: #64748b;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .5px;
+
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: 800;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+
+            margin-top: 50px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-box {
+                grid-template-columns: 1fr;
+            }
+
+            .access-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .student-name {
+                display: none;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="brand">
+        Student Learning
+    </div>
+
+    <div class="nav-right">
+
+        <span
+            class="student-name"
+            id="studentName">
+        </span>
+
+        <button
+            class="logout-btn"
+            onclick="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="container">
+
+    <section class="welcome">
+
+        <h1>
+            Welcome to your dashboard
+        </h1>
+
+        <p>
+            Continue learning, access your courses,
+            and manage your student learning experience.
+        </p>
+
+    </section>
+
+
+    <!-- ACCESS -->
+
+    <section class="access-card">
+
+        <div>
+
+            <h2 id="accessTitle">
+                Your Learning Access
+            </h2>
+
+            <p id="accessDescription">
+                Your verified payment has activated
+                your learning access.
+            </p>
+
+        </div>
+
+        <div
+            class="access-badge"
+            id="accessBadge">
+
+            Active
+
+        </div>
+
+    </section>
+
+
+    <!-- CARDS -->
+
+    <section class="grid">
+
+        <div class="card">
+
+            <div class="icon">
+                📚
+            </div>
+
+            <h3>
+                My Course
+            </h3>
+
+            <p>
+                Open your learning materials,
+                lessons and course content.
+            </p>
+
+            <a
+                href="course.html"
+                class="primary-btn">
+
+                Start Learning
+
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">
+                📊
+            </div>
+
+            <h3>
+                Learning Progress
+            </h3>
+
+            <p>
+                Track your learning journey and
+                continue from where you stopped.
+            </p>
+
+            <button
+                class="secondary-btn"
+                onclick="showProgress()">
+
+                View Progress
+
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">
+                🎓
+            </div>
+
+            <h3>
+                Student Support
+            </h3>
+
+            <p>
+                Need help with your learning?
+                Contact the course support team.
+            </p>
+
+            <a
+                href="mailto:ranjana.guha@gmail.com"
+                class="secondary-btn">
+
+                Contact Support
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- PLAN -->
+
+    <section class="plan-section">
+
+        <h2>
+            Your Account
+        </h2>
+
+        <div class="info-box">
+
+            <div class="info-item">
+
+                <div class="info-label">
+                    Access Plan
+                </div>
+
+                <div
+                    class="info-value"
+                    id="planName">
+
+                    -
+
+                </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <div class="info-label">
+                    Payment ID
+                </div>
+
+                <div
+                    class="info-value"
+                    id="paymentId">
+
+                    -
+
+                </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <div class="info-label">
+                    Order ID
+                </div>
+
+                <div
+                    class="info-value"
+                    id="orderId">
+
+                    -
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        © 2026 Student Learning Portal.
+        All rights reserved.
+
+    </footer>
+
+</main>
+
+
+<script>
+
+    /* =====================================================
+       GET STUDENT ACCESS
+    ===================================================== */
+
+    const access =
+        localStorage.getItem("studentPlan") ||
+        localStorage.getItem("courseAccess");
+
+
+    const paymentId =
+        localStorage.getItem("paymentId") ||
+        "-";
+
+
+    const orderId =
+        localStorage.getItem("orderId") ||
+        "-";
+
+
+    /* =====================================================
+       ACCESS CHECK
+    ===================================================== */
+
+    if (!access) {
+
+        alert(
+            "No active learning access was found. Please complete a plan purchase first."
+        );
+
+        window.location.href = "index.html";
+
+    }
+
+
+    /* =====================================================
+       STUDENT NAME
+    ===================================================== */
+
+    const storedName =
+        localStorage.getItem("studentName");
+
+    if (storedName) {
+
+        document.getElementById(
+            "studentName"
+        ).textContent =
+            storedName;
+
+    }
+
+
+    /* =====================================================
+       PLAN DISPLAY
+    ===================================================== */
+
+    let planText = "Learning Access";
+
+
+    if (access === "partial") {
+
+        planText =
+            "Partial Access";
+
+    }
+
+    else if (access === "full") {
+
+        planText =
+            "Full Access";
+
+    }
+
+    else if (access === "mentorship") {
+
+        planText =
+            "1-to-1 Mentorship";
+
+    }
+
+
+    document.getElementById(
+        "planName"
+    ).textContent =
+        planText;
+
+
+    document.getElementById(
+        "accessBadge"
+    ).textContent =
+        planText;
+
+
+    document.getElementById(
+        "accessTitle"
+    ).textContent =
+        planText;
+
+
+    /* =====================================================
+       PAYMENT INFORMATION
+    ===================================================== */
+
+    document.getElementById(
+        "paymentId"
+    ).textContent =
+        paymentId;
+
+
+    document.getElementById(
+        "orderId"
+    ).textContent =
+        orderId;
+
+
+    /* =====================================================
+       PROGRESS
+    ===================================================== */
+
+    function showProgress() {
+
+        alert(
+            "Learning progress tracking will appear here as you complete your lessons."
+        );
+
+    }
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    function logout() {
+
+        localStorage.removeItem(
+            "studentPlan"
+        );
+
+        localStorage.removeItem(
+            "courseAccess"
+        );
+
+        localStorage.removeItem(
+            "paymentId"
+        );
+
+        localStorage.removeItem(
+            "orderId"
+        );
+
+        localStorage.removeItem(
+            "studentName"
+        );
+
+        window.location.href =
+            "index.html";
+
+    }
+
+</script>
+
+</body>
+</html>
